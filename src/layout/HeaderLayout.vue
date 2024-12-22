@@ -49,7 +49,7 @@ const loginOut = async () => {
         <el-avatar> {{ userStore.userInfo?.username?.slice(0, 1) || '' }} </el-avatar>
       </template>
 
-      <el-dropdown trigger="click" :hide-on-click="false" @command="handleCommand" size="large">
+      <el-dropdown trigger="click" :hide-on-click="false" size="large" @command="handleCommand">
         <span class="user-center-name">
           {{ userStore.userInfo?.username || '' }}
           <el-icon><ArrowDown /></el-icon>

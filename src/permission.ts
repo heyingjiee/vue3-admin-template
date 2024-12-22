@@ -34,6 +34,7 @@ router.beforeEach(async (to, from, next) => {
           // 重新获取成功，放行
           next()
         } catch (err) {
+          console.log('err -->', err)
           // 获取用户信息失败（网络请求失败或者是业务失败，例如：用户封禁、token过期）
           await userStore.userLogout()
           next({ path: '/login', query: { redirect: to.path } })

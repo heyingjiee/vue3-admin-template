@@ -11,7 +11,7 @@ const btc = () => {
   <div>
     <div>home</div>
     <button @click="btc">111</button>
-    <svg-icons name="add"></svg-icons>
+    <svg-icons name="add" color=""></svg-icons>
   </div>
 </template>
 

@@ -5,7 +5,7 @@ import chinaJSON from '../data/china.json'
 
 const map = ref()
 // 注册地图
-echarts.registerMap('china', chinaJSON as any)
+echarts.registerMap('china', chinaJSON as unknown)
 onMounted(() => {
   const chart = echarts.init(map.value)
   chart.setOption({
@@ -60,8 +60,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex justify-center map-container">
-    <div class="map" ref="map"></div>
+  <div class="map-container flex justify-center">
+    <div ref="map" class="map"></div>
   </div>
 </template>
 

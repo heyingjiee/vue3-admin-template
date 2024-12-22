@@ -28,7 +28,7 @@ RequestInstance.interceptors.request.use(
 
 RequestInstance.interceptors.response.use(
   (response) => {
-    const { showError = true, data: bussiness } = response as any
+    const { showError = true, data: bussiness } = response
     if (bussiness.code !== 0 && showError) {
       ElMessage({
         type: 'error',

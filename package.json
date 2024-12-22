@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "husky",
     "preinstall": "npx only-allow pnpm",
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -39,7 +40,7 @@
     "@types/node": "^18.19.68",
     "@typescript-eslint/parser": "^8.18.1",
     "@unocss/eslint-config": "^0.65.1",
-    "@unocss/preset-uno": "^0.65.1",
+    "@unocss/preset-rem-to-px": "^0.65.2",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.1.0",
     "@vue/eslint-config-typescript": "^14.1.4",

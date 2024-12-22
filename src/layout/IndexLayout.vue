@@ -24,7 +24,7 @@ const route = useRoute()
           :default-active="route.path"
           router
         >
-          <SideLayout :menuList="menuList" />
+          <SideLayout :menu-list="menuList" />
         </el-menu>
       </div>
       <div class="content-layout-container">

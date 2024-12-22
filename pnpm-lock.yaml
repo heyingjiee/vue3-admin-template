@@ -63,9 +63,9 @@ importers:
       '@unocss/eslint-config':
         specifier: ^0.65.1
         version: 0.65.1(eslint@9.17.0(jiti@1.21.6))(typescript@5.2.2)
-      '@unocss/preset-uno':
-        specifier: ^0.65.1
-        version: 0.65.1
+      '@unocss/preset-rem-to-px':
+        specifier: ^0.65.2
+        version: 0.65.2
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
         version: 5.2.1(vite@6.0.3(@types/node@18.19.68)(jiti@1.21.6)(less@4.2.1)(sass@1.83.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.2.2))
@@ -1081,6 +1081,9 @@ packages:
   '@unocss/core@0.65.1':
     resolution: {integrity: sha512-Ke0WNZjfSCE6pniJb8PjiwhO6/McxVb1EQYrkkz8aJuR83xu+AEcTog9D4N9EUkRfHS5tZYXQtTj4Uh90T6CEg==}
 
+  '@unocss/core@0.65.2':
+    resolution: {integrity: sha512-37zj1w/6TENsUMzRRmlH5LqUcLGTTjGHrUeZ5KZyeDk+osB/rHSCw0VqqqvL6a7cOHgaW88JgfgKDt5ijRZyFA==}
+
   '@unocss/eslint-config@0.65.1':
     resolution: {integrity: sha512-LVSUc9sNZyG4/Ho3XnrFP6wszkEOb/s8ojoSbeIa0omdmIWwm6KIOUD5Vmk539Gh9KnpvzmyeeIJS+mbKHnJMw==}
     engines: {node: '>=14'}
@@ -1109,6 +1112,9 @@ packages:
 
   '@unocss/preset-mini@0.65.1':
     resolution: {integrity: sha512-dKIxi+ChWSZvXG8I7yVBjw4FLHdAvKrrCN9bjKpR4/4epKD6jRtEcR6S1wL6XSBWabh7V7D/VbVk+XZ6WsGuXA==}
+
+  '@unocss/preset-rem-to-px@0.65.2':
+    resolution: {integrity: sha512-79cQWWOafDdLY0QzPyt4fOi+78yVqvz8d3F/ghblKOJF+FG3Blh+LEGXfkyGuMNVl+/4Xem9AxEVLcylSe6VAw==}
 
   '@unocss/preset-tagify@0.65.1':
     resolution: {integrity: sha512-u0yWFXyyBumglFvn87MT7kasa3KPAWTiIHkTCVu8tNEFNfJzR9BZLEXGAtwrhqMm0pSCnDdqupwBLBQoVX8zEA==}
@@ -4924,6 +4930,8 @@ snapshots:
 
   '@unocss/core@0.65.1': {}
 
+  '@unocss/core@0.65.2': {}
+
   '@unocss/eslint-config@0.65.1(eslint@9.17.0(jiti@1.21.6))(typescript@5.2.2)':
     dependencies:
       '@unocss/eslint-plugin': 0.65.1(eslint@9.17.0(jiti@1.21.6))(typescript@5.2.2)
@@ -4986,6 +4994,10 @@ snapshots:
       '@unocss/core': 0.65.1
       '@unocss/extractor-arbitrary-variants': 0.65.1
       '@unocss/rule-utils': 0.65.1
+
+  '@unocss/preset-rem-to-px@0.65.2':
+    dependencies:
+      '@unocss/core': 0.65.2
 
   '@unocss/preset-tagify@0.65.1':
     dependencies:

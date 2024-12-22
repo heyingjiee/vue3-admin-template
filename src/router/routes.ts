@@ -92,7 +92,7 @@ const constantRoute: RouteRecordRaw[] = [
       title: '404',
       hiddenMenuItem: true
     },
-    component: () => import('@/views/404.vue')
+    component: () => import('@/views/NotFoundPage.vue')
   },
   {
     name: 'Any',
@@ -101,7 +101,7 @@ const constantRoute: RouteRecordRaw[] = [
       title: '404',
       hiddenMenuItem: true
     },
-    component: () => import('@/views/404.vue')
+    component: () => import('@/views/NotFoundPage.vue')
   }
 ]
 

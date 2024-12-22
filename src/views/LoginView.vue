@@ -80,7 +80,7 @@ const login = (formRef: FormInstance | undefined) => {
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="btn-area">
-          <el-button type="primary" @click="login(formRef)" :loading="loading">登录</el-button>
+          <el-button type="primary" :loading="loading" @click="login(formRef)">登录</el-button>
         </el-form-item>
       </el-form>
     </div>

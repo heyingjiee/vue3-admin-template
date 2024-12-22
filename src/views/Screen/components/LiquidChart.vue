@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="liquid" ref="liquid"></div>
+  <div ref="liquid" class="liquid"></div>
 </template>
 
 <style scoped lang="less">

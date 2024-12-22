@@ -21,16 +21,16 @@ window.onresize = () => {
 </script>
 <template>
   <div class="container">
-    <div class="screen" ref="screen">
+    <div ref="screen" class="screen">
       <ScreenHeader class="header" />
-      <div class="flex flex-grow-1 main">
-        <div class="flex-shrink-0 left">
+      <div class="main flex flex-grow-1">
+        <div class="left flex-shrink-0">
           <LiquidChart />
         </div>
         <div class="center flex-grow-1">
           <MapChart />
         </div>
-        <div class="flex-shrink-0 right"></div>
+        <div class="right flex-shrink-0"></div>
       </div>
     </div>
   </div>

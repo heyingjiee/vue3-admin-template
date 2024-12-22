@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-const userList = ref([
+
+interface User {
+  userID: number
+  username: string
+  userRole: string
+  createTime: string
+  updateTime: string
+}
+
+const userList = ref<User[]>([
   {
     userID: 120,
     username: '1',
@@ -11,7 +20,8 @@ const userList = ref([
 ])
 
 const editDialogVis = ref(false)
-const openEditDialog = (row: any) => {
+const openEditDialog = (row: User) => {
+  console.log('openEditDialog -->', row)
   editDialogVis.value = true
 }
 
@@ -19,7 +29,7 @@ const getCustomerList = () => {}
 
 const deleteById = () => {}
 
-const pageSize = 10
+// const pageSize = 10
 const curPageNum = ref(1)
 const totalPageNum = ref(81)
 </script>
@@ -39,7 +49,7 @@ const totalPageNum = ref(81)
         </el-form-item>
       </el-form>
       <!-- 表格-->
-      <el-table :data="userList" border stripe size="large">
+      <el-table :data="userList" stripe border size="large">
         <el-table-column label="#" type="selection"></el-table-column>
         <el-table-column prop="userID" label="用户ID"></el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
@@ -48,7 +58,7 @@ const totalPageNum = ref(81)
         <el-table-column prop="updateTime" label="更新时间"></el-table-column>
 
         <el-table-column label="操作" width="500">
-          <template v-slot="scope">
+          <template #default="scope">
             <el-button type="primary" icon="User" @click="openEditDialog(scope.row)"
               >分配角色</el-button
             >
@@ -64,10 +74,10 @@ const totalPageNum = ref(81)
       <!-- 分页区 -->
       <div class="pagination-area">
         <el-pagination
+          v-model:current-page="curPageNum"
           layout="prev, pager, next"
           background
           :total="totalPageNum"
-          v-model:current-page="curPageNum"
           @current-change="getCustomerList"
         >
         </el-pagination>

@@ -1,12 +1,21 @@
 <script lang="ts" setup>
+import type { RouteRecordRaw } from 'vue-router'
+
 defineOptions({
   name: 'SideLayout'
 })
-defineProps(['menuList'])
 
-const hasValidChildren = (menuItem: any) => {
+interface PropType {
+  menuList: RouteRecordRaw[]
+}
+
+const { menuList = [] } = defineProps<PropType>()
+
+const hasValidChildren = (menuItem: RouteRecordRaw) => {
   if (menuItem.children) {
-    const index = menuItem.children.findIndex((item: any) => item.meta?.hiddenMenuItem !== true)
+    const index = menuItem.children.findIndex(
+      (item: RouteRecordRaw) => item.meta?.hiddenMenuItem !== true
+    )
 
     return index !== -1
   }
@@ -23,9 +32,9 @@ const hasValidChildren = (menuItem: any) => {
           </el-icon>
           <span>{{ menuItem.meta.title }}</span>
         </template>
-        <SideLayout :menuList="menuItem.children" />
+        <SideLayout :menu-list="menuItem.children" />
       </el-sub-menu>
-      <SideLayout v-else :menuList="menuItem.children" />
+      <SideLayout v-else :menu-list="menuItem.children" />
     </template>
 
     <template v-else>
