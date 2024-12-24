@@ -26,7 +26,6 @@ const changeDarkMode = () => {
 
 const changeTheme = (curColor: string) => {
   const html = document.documentElement
-
   html.style.setProperty('--el-color-primary', curColor)
 }
 const loginOut = async () => {
@@ -38,24 +37,26 @@ const loginOut = async () => {
 </script>
 
 <template>
-  <div class="header-layout-container">
-    <div class="title">后台管理系统</div>
-    <div class="user-center">
-      <!-- 头像-->
-      <template v-if="userStore.userInfo?.avatar">
-        <el-avatar :src="userStore.userInfo.avatar"> </el-avatar>
-      </template>
-      <template v-else>
-        <el-avatar> {{ userStore.userInfo?.username?.slice(0, 1) || '' }} </el-avatar>
-      </template>
-
+  <el-menu class="flex items-center justify-between" mode="horizontal" :ellipsis="false" router>
+    <el-menu-item index="/">
+      <div class="flex items-center justify-center text-18">
+        <span>后台管理系统</span>
+      </div>
+    </el-menu-item>
+    <div class="flex items-center gap-x-10 pr-10">
       <el-dropdown trigger="click" :hide-on-click="false" size="large" @command="handleCommand">
-        <span class="user-center-name">
-          {{ userStore.userInfo?.username || '' }}
-          <el-icon><ArrowDown /></el-icon>
-        </span>
+        <!-- 头像-->
+        <template v-if="userStore.userInfo?.avatar">
+          <el-avatar :src="userStore.userInfo.avatar"> </el-avatar>
+        </template>
+        <template v-else>
+          <el-avatar> {{ userStore.userInfo?.username?.slice(0, 1) || '' }} </el-avatar>
+        </template>
         <template #dropdown>
           <el-dropdown-menu>
+            <el-dropdown-item disabled>
+              <span>用户名 {{ userStore.userInfo?.username || '111' }}</span>
+            </el-dropdown-item>
             <el-dropdown-item class="flex">
               <div style="margin-right: 10px">主题</div>
               <el-color-picker v-model="curThemeColor" size="large" @change="changeTheme" />
@@ -75,33 +76,5 @@ const loginOut = async () => {
         </template>
       </el-dropdown>
     </div>
-  </div>
+  </el-menu>
 </template>
-
-<style scoped lang="less">
-.header-layout-container {
-  width: 100vw;
-  padding: 0 20px;
-  box-sizing: border-box;
-  height: @header-height;
-  background: @header-bg-color;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .title {
-    font-weight: bold;
-    font-size: 30px;
-    color: white;
-  }
-  .user-center {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .user-center-name {
-      color: #ffffff;
-      margin-left: 10px;
-    }
-  }
-}
-</style>

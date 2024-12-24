@@ -12,22 +12,19 @@ const menuList = userStore.menuRoute
 const route = useRoute()
 </script>
 <template>
-  <div class="layout-container">
+  <div class="fixed left-0 top-0 h-screen w-screen flex flex-col">
     <HeaderLayout />
-    <div class="main-layout-container">
-      <div class="side-layout-container">
-        <el-menu
-          background-color="#323744"
-          unique-opened
-          text-color="#fff"
-          active-text-color="#4787d5"
-          :default-active="route.path"
-          router
-        >
-          <SideLayout :menu-list="menuList" />
-        </el-menu>
-      </div>
-      <div class="content-layout-container">
+    <div class="w-screen flex flex-grow-1">
+      <el-menu
+        class="w-180"
+        active-text-color="#4787d5"
+        :default-active="route.path"
+        router
+        unique-opened
+      >
+        <SideLayout :menu-list="menuList" />
+      </el-menu>
+      <div class="flex-grow-1">
         <BreadcrumbBar :route="route" />
         <div class="content-component">
           <router-view v-slot="{ Component }">
@@ -42,47 +39,16 @@ const route = useRoute()
 </template>
 
 <style scoped lang="less">
-.layout-container {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.content-component {
+  width: 100%;
+  flex-grow: 1;
+  min-height: 1px;
 
-  .main-layout-container {
-    width: 100vw;
-    height: calc(100vh - @header-height);
-    display: flex;
-
-    .side-layout-container {
-      width: @side-width;
-      background: @side-bg-color;
-      overflow: scroll;
-    }
-    .content-layout-container {
-      width: calc(100vw - @side-width);
-      height: 100%;
-      background: #f6f8fa;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-
-      .content-component {
-        width: 100%;
-        flex-grow: 1;
-        min-height: 1px;
-
-        padding: 20px;
-        box-sizing: border-box;
-        height: 100%;
-        overflow: scroll;
-      }
-    }
-  }
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: scroll;
 }
-
 .fade-enter-from {
   opacity: 0;
   padding-left: 10px;

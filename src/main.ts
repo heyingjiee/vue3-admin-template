@@ -9,7 +9,9 @@ import 'element-plus/theme-chalk/dark/css-vars.css' //切换暗夜模式
 
 // unocss
 import 'virtual:uno.css'
+import '@unocss/reset/tailwind.css'
 import '@unocss/reset/normalize.css'
+import '@unocss/reset/tailwind-compat.css'
 
 // vue相关
 import { createApp } from 'vue'

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { UserFilled, Lock } from '@element-plus/icons-vue'
+import { reactive } from 'vue'
 import { ElNotification } from 'element-plus'
-import type { FormRules, FormInstance } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 import useUserStore from '@/stores/modules/user'
 import { getLoginTimeTip } from '@/utils/time'
@@ -15,121 +13,98 @@ const loginForm = reactive({
   username: '',
   password: ''
 })
-const loading = ref(false)
 
-const loginFormRules = reactive<FormRules<typeof loginForm>>({
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码,长度大于5位', min: 5, trigger: 'blur' }]
-})
-
-const formRef = ref<FormInstance>()
-
-const login = (formRef: FormInstance | undefined) => {
-  loading.value = true
-  formRef?.validate(async (valid) => {
-    try {
-      if (!valid) {
-        return false
-      }
-      await userStore.userLogin(loginForm)
-      await router.push({ path: (route.query.redirect as string) ?? '/' })
-      ElNotification({
-        title: `Hi，${getLoginTimeTip()}好`,
-        message: '欢迎回来',
-        type: 'success'
-      })
-    } catch (err) {
-      console.log('login fail:', err)
-    } finally {
-      loading.value = false
-    }
-  })
+const login = async () => {
+  try {
+    await userStore.userLogin(loginForm)
+    await router.push({ path: (route.query.redirect as string) ?? '/' })
+    ElNotification({
+      title: `Hi，${getLoginTimeTip()}好`,
+      message: '欢迎回来',
+      type: 'success'
+    })
+  } catch (err) {
+    console.log('login fail:', err)
+  }
 }
 </script>
 
 <template>
-  <div class="login_container">
-    <div class="login_box">
-      <!--头像-->
-      <div class="avatar">
-        <img src="@/assets/logo.png" />
+  <div class="h-screen w-screen flex items-center justify-center bg-#274a6c">
+    <div class="h-480px w-800 flex rounded-16 bg-#FDFDFD">
+      <div class="w-50% flex flex-col items-center justify-center border-r-1 border-r-slate-300">
+        <div
+          class="h-48 w-fit flex items-center justify-center rounded-999 bg-#EBF3FE p-20 c-#3d8af5"
+        >
+          扫码登录更便捷
+        </div>
+        <div
+          class="qr-container mb-20 mt-40 h-160 w-160 border-width-2 border-white rounded-12 border-solid p-22"
+        >
+          <div class="h-full w-full bg-gray"></div>
+        </div>
+        <div>使用微信扫码登录</div>
       </div>
-      <!--表单区-->
-      <el-form
-        ref="formRef"
-        :model="loginForm"
-        :rules="loginFormRules"
-        label-width="0px"
-        class="login_form"
-      >
-        <!-- 账号 -->
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username">
-            <template #prepend>
-              <el-button :icon="UserFilled" />
-            </template>
-          </el-input>
-        </el-form-item>
-        <!-- 密码 -->
-        <el-form-item prop="password">
-          <el-input v-model="loginForm.password" show-password>
-            <template #prepend>
-              <el-button :icon="Lock" />
-            </template>
-          </el-input>
-        </el-form-item>
-        <!-- 按钮 -->
-        <el-form-item class="btn-area">
-          <el-button type="primary" :loading="loading" @click="login(formRef)">登录</el-button>
-        </el-form-item>
-      </el-form>
+      <div class="w-50% flex flex-col items-center justify-center">
+        <div class="w-304">
+          <div class="pb-32 text-18 font-600">手机号登录</div>
+          <div>
+            <div class="h-48 flex items-center rounded-999 bg-#F5F5F5 p-16">
+              <div class="pr-18">+86</div>
+              <input
+                v-model="loginForm.username"
+                class="flex-grow-1"
+                placeholder="输入手机号"
+                type="text"
+              />
+            </div>
+
+            <div class="mt-16 h-48 flex items-center justify-between rounded-999 bg-#F5F5F5 p-16">
+              <input
+                v-model="loginForm.username"
+                class="flex-grow-1"
+                placeholder="输入验证码"
+                type="text"
+              />
+              <div class="whitespace-nowrap pr-18 c-[rgba(255,36,66)]">获取验证码</div>
+            </div>
+          </div>
+          <div class="mt-10 text-center text-14 c-#ff2442">验证码错误</div>
+          <div
+            class="my-16 h-48 flex cursor-pointer items-center justify-center rounded-999 bg-#ff2442 text-16 c-white font-600"
+            @click="login()"
+          >
+            登录
+          </div>
+          <div class="flex items-center justify-center">
+            <input type="checkbox" />
+            <div class="ml-6 text-12 c-#B5B5B5">
+              我已阅读并同意<span class="c-#13386c">《用户协议》《隐私政策》</span>
+            </div>
+          </div>
+          <div class="mt-28 flex items-center justify-center gap-x-10 text-center c-#B5B5B5">
+            <div>其他登录方式：</div>
+            <div class="i-grommet-icons:wechat text-#44B036" />
+            <div class="i-grommet-icons:github text-#515767" />
+            <div class="i-grommet-icons:mail" />
+            <!--全部 icon https://icones.js.org/-->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="less">
-.login_container {
-  background-color: #274a6c;
-  width: 100vw;
-  height: 100vh;
+.qr-container {
+  box-shadow:
+    0 4px 32px 0 rgba(0, 0, 0, 0.08),
+    0 1px 4px 0 rgba(0, 0, 0, 0.04);
 }
-.login_box {
-  width: 450px;
-  height: 300px;
-  background-color: white;
-  border-radius: 3px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.avatar {
-  height: 130px;
-  width: 130px;
-  border: 1px solid #eee;
-  border-radius: 50%;
-  padding: 10px;
-  box-shadow: 0 0 10px #ddd;
-  position: absolute;
-  left: 50%; //绝对定位，该元素的左边缘移动到父元素的50%的
-  transform: translate(-50%, -50%); //横向，纵向 移动本元素宽，高的50%
-  background-color: white;
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #eee;
-  }
-}
-
-.btn-area {
-  text-align: right;
-}
-.login_form {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 0 30px;
-  box-sizing: border-box;
+input[type='text'] {
+  appearance: none;
+  background: #f5f5f5;
+  border: none;
+  outline: none;
 }
 </style>
