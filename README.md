@@ -1,46 +1,42 @@
-# vue3-admin
+# vue3-admin-template
 
-This template should help get you started developing with Vue 3 in Vite.
+一个基于 Vue3、TypeScript、Vite6 的轻量级前端项目模板。
 
-## Recommended IDE Setup
+## 技术栈
+* 🎯 Vue 3
+* 🔧 TypeScript
+* ⚡️ Vite 6
+* 🎨 UnoCSS
+* 🏬 Pinia
+* 🛠️ VueRouter
+* 📦 PNPM
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 快速开始
+### 安装依赖
+pnpm install
 
-## Type Support for `.vue` Imports in TS
+### 开发环境启动
+pnpm dev
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+### 构建
+pnpm build    
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## 项目结构
+├── src/
+│   ├── assets/        # 静态资源
+│   ├── components/    # 公共组件
+│   ├── pages/        # 页面组件
+│   ├── router/       # 路由配置
+│   ├── store/        # 状态管理
+│   ├── styles/       # 全局样式
+│   └── types/        # TypeScript 类型
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+环境配置
+.env 基础配置
 
-## Customize configuration
+.env.development 开发环境配置
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+.env.production 生产环境配置
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## License
+MIT
