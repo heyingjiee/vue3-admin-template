@@ -6,6 +6,7 @@
 * 🎯 Vue 3
 * 🔧 TypeScript
 * ⚡️ Vite 6
+* ⚙️ ESLint
 * 🎨 UnoCSS
 * 🏬 Pinia
 * 🛠️ VueRouter
@@ -13,15 +14,22 @@
 
 ## 快速开始
 ### 安装依赖
-pnpm install
+```shell
+$ pnpm install
+```
 
 ### 开发环境启动
-pnpm dev
+```shell
+$ pnpm dev
+```
 
 ### 构建
-pnpm build    
+```shell
+$ pnpm build 
+```
 
 ## 项目结构
+```text
 ├── src/
 │   ├── assets/        # 静态资源
 │   ├── components/    # 公共组件
@@ -30,10 +38,9 @@ pnpm build
 │   ├── store/        # 状态管理
 │   ├── styles/       # 全局样式
 │   └── types/        # TypeScript 类型
+```
 
-环境配置
-.env 基础配置
-
+## 环境配置
 .env.development 开发环境配置
 
 .env.production 生产环境配置
