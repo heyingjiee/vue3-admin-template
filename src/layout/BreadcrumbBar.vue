@@ -11,23 +11,21 @@ defineProps({
 
 <template>
   <div>
-    <!--<el-card px-100 class="w-full px-5 py-1" shadow="never">-->
-    <!--  <el-breadcrumb separator="/">-->
-    <!--    <template v-for="item in route.matched" :key="item.path">-->
-    <!--      <el-breadcrumb-item v-if="!item.meta.hiddenMenuItem" class="prose prose-truegray">-->
-    <!--        {{ item.meta.title }}-->
-    <!--      </el-breadcrumb-item>-->
-    <!--    </template>-->
-    <!--  </el-breadcrumb>-->
-    <!--</el-card>-->
-    <el-breadcrumb separator="/">
-      <template v-for="item in route.matched" :key="item.path">
-        <el-breadcrumb-item v-if="!item.meta.hiddenMenuItem" class="prose prose-truegray">
-          {{ item.meta.title }}
-        </el-breadcrumb-item>
-      </template>
-    </el-breadcrumb>
+    <div class="breadcrumb-container w-full px-20 py-20">
+      <el-breadcrumb separator="/">
+        <template v-for="item in route.matched" :key="item.path">
+          <el-breadcrumb-item v-if="!item.meta.hiddenMenuItem" class="prose prose-truegray">
+            {{ item.meta.title }}
+          </el-breadcrumb-item>
+        </template>
+      </el-breadcrumb>
+    </div>
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.breadcrumb-container {
+  background-color: var(--el-menu-bg-color);
+  border-bottom: 1px solid var(--el-menu-border-color);
+}
+</style>

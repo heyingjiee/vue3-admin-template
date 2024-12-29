@@ -3,7 +3,7 @@ import type { loginForm, loginResponseData, getUserInfoResponseData } from '@/ty
 import type { Response } from '@/types/response'
 export function login(data: loginForm): Promise<Response<loginResponseData>> {
   return request({
-    url: '/api/login',
+    url: '/auth/local/login/',
     method: 'POST',
     data
   })
@@ -11,19 +11,9 @@ export function login(data: loginForm): Promise<Response<loginResponseData>> {
 
 export function getUserInfo(token: string): Promise<Response<getUserInfoResponseData>> {
   return request({
-    url: '/api/get-user-info',
-    method: 'POST',
-    data: {
-      token
-    }
-  })
-}
-
-export function loginOut(token: string): Promise<Response<null>> {
-  return request({
-    url: '/api/login-out',
-    method: 'POST',
-    data: {
+    url: '/user/profile',
+    method: 'GET',
+    headers: {
       token
     }
   })

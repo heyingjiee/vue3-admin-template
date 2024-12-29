@@ -29,7 +29,7 @@ RequestInstance.interceptors.request.use(
 RequestInstance.interceptors.response.use(
   (response) => {
     const { showError = true, data: bussiness } = response
-    if (bussiness.code !== 0 && showError) {
+    if (bussiness.code !== '000000' && showError) {
       ElMessage({
         type: 'error',
         message: bussiness.msg || '业务异常'
@@ -38,26 +38,27 @@ RequestInstance.interceptors.response.use(
     return response.data
   },
   async (error) => {
-    let message = ''
+    let { message } = error.response.data
     const status = error.response.status
+
     switch (status) {
       case 401:
-        message = '登录失效'
+        message ??= '登录失效'
         await useUserStore().userLogout()
         await router.replace({ path: '/login' })
         break
       case 403:
-        message = '暂无权限'
+        message ??= '暂无权限'
         router.back()
         break
       case 404:
-        message = '请求地址错误'
+        message ??= '请求地址错误'
         break
       case 500:
-        message = '服务器错误'
+        message ??= '服务器错误'
         break
       default:
-        message = '发生错误'
+        message ??= '发生错误'
     }
 
     ElMessage({

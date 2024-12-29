@@ -27,6 +27,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' }) // 这里跳转/,会再次触发路由守卫，进入下面else判断
     } else {
+      debugger
       if (!userStore.userInfo) {
         //用户信息不存在，重新获取
         try {

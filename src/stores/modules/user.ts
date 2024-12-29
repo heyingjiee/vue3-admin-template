@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { login, getUserInfo, loginOut } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import type { loginForm, getUserInfoResponseData } from '@/types/user'
 import { ref } from 'vue'
 import constantRoute from '@/router/routes'
@@ -22,6 +22,9 @@ function SET_TOKEN(token: string) {
   localStorage.setItem('TOKEN', token)
 }
 
+/**
+ * 移除token
+ */
 function REMOVE_TOKEN() {
   localStorage.removeItem('TOKEN')
 }
@@ -35,7 +38,7 @@ export default defineStore('User', () => {
    */
   const userLogin = async (data: loginForm) => {
     const loginRes = await login(data)
-    if (loginRes?.code === 0 && loginRes?.data?.token) {
+    if (loginRes?.code === '000000' && loginRes?.data?.token) {
       token.value = loginRes.data.token
       SET_TOKEN(loginRes.data.token)
       return Promise.resolve()
@@ -47,9 +50,10 @@ export default defineStore('User', () => {
    * 获取用户信息(用户数据存在内存中更安全，但是内存存储刷新即会丢失。可在路由守卫触发时判断是否存在，不存在用token请求再进行存储)
    */
   const userInfo: Ref<getUserInfoResponseData | null> = ref(null)
+
   const getUserInfoHandler = async (token: string) => {
     const res = await getUserInfo(token)
-    if (res?.code === 0 && res?.data) {
+    if (res?.code === '000000' && res?.data) {
       userInfo.value = res.data
     } else {
       return Promise.reject(new Error(res?.message || '获取用户信息失败'))
@@ -60,14 +64,9 @@ export default defineStore('User', () => {
    * 退出登录
    */
   const userLogout = async () => {
-    const res = await loginOut(token.value as string)
-    if (res?.code === 0) {
-      token.value = null
-      userInfo.value = null
-      REMOVE_TOKEN()
-    } else {
-      return Promise.reject(new Error(res?.message || '退出登录状态失败'))
-    }
+    token.value = null
+    userInfo.value = null
+    REMOVE_TOKEN()
   }
 
   // 菜单路由

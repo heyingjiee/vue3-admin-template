@@ -57,15 +57,15 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
-    },
-    // 预处理器less
-    css: {
-      preprocessorOptions: {
-        less: {
-          additionalData: '@import "./src/styles/variable.less";'
-        }
-      }
     }
+    // 预处理器less
+    // css: {
+    //   preprocessorOptions: {
+    //     less: {
+    //       additionalData: '@import "./src/styles/variable.less";'
+    //     }
+    //   }
+    // }
     // 代理
     // server: {
     //   proxy: {
