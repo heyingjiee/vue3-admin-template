@@ -5,22 +5,47 @@ import { useRouter, useRoute } from 'vue-router'
 import useUserStore from '@/stores/modules/user'
 import { getLoginTimeTip } from '@/utils/time'
 
+enum LoginTypeEnum {
+  LOCAL,
+  EMAIL
+}
+
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
-
-const loginForm = reactive({
-  username: '',
-  password: ''
-})
 
 const isAgree = ref(false)
 const disabledAnimation = ref(false)
 
 const verifyFailMsg = ref('')
 
+const curLoginType = ref(LoginTypeEnum.LOCAL)
+
+// 登录处理
+const loginHandle = async () => {
+  switch (curLoginType.value) {
+    case LoginTypeEnum.LOCAL:
+      await localLogin()
+      break
+    case LoginTypeEnum.EMAIL:
+      emailLogin()
+      break
+  }
+  // 进入首页
+  await router.push({ path: (route.query.redirect as string) ?? '/' })
+  ElNotification({
+    title: `Hi，${getLoginTimeTip()}好`,
+    message: '欢迎回来',
+    type: 'success'
+  })
+}
+
 // 账号密码登录
-const login = async () => {
+const localParamForm = reactive({
+  username: '',
+  password: ''
+})
+const localLogin = async () => {
   try {
     if (!isAgree.value) {
       disabledAnimation.value = true
@@ -31,27 +56,29 @@ const login = async () => {
       timer = null
       return
     }
-    if (!loginForm.username) {
+    if (!localParamForm.username) {
       verifyFailMsg.value = '请输入用户名'
       return
     }
-    if (!loginForm.password) {
+    if (!localParamForm.password) {
       verifyFailMsg.value = '请输入密码'
       return
     }
+
     verifyFailMsg.value = ''
-    await userStore.userLogin(loginForm)
-    await router.push({ path: (route.query.redirect as string) ?? '/' })
-    ElNotification({
-      title: `Hi，${getLoginTimeTip()}好`,
-      message: '欢迎回来',
-      type: 'success'
-    })
+    await userStore.userLogin(localParamForm)
   } catch (err) {
     console.log('login fail:', err)
     return Promise.reject('')
   }
 }
+
+// 邮箱登录
+const emailParamForm = reactive({
+  email: '',
+  verifyCode: ''
+})
+const emailLogin = () => {}
 
 // Github 登录
 const githubLogin = () => {
@@ -79,31 +106,64 @@ const githubLogin = () => {
       </div>
       <div class="w-50% flex flex-col items-center justify-center">
         <div class="w-304">
-          <div class="pb-32 text-18 font-600">账号登录</div>
-          <div class="mb-10">
+          <div class="flex gap-x-12 pb-32 text-18">
+            <div
+              class="login-type-item"
+              :class="{ 'font-600': curLoginType === LoginTypeEnum.LOCAL }"
+              @click="curLoginType = LoginTypeEnum.LOCAL"
+            >
+              账号登录
+            </div>
+            <div
+              class="login-type-item"
+              :class="{ 'font-600': curLoginType === LoginTypeEnum.EMAIL }"
+              @click="curLoginType = LoginTypeEnum.EMAIL"
+            >
+              邮箱登录
+            </div>
+          </div>
+          <div v-if="curLoginType === LoginTypeEnum.LOCAL" class="mb-10">
             <div class="h-48 flex items-center rounded-999 bg-#F5F5F5 p-16">
               <!--<div class="pr-18">+86</div>-->
               <input
-                v-model="loginForm.username"
+                v-model="localParamForm.username"
                 class="flex-grow-1"
                 placeholder="输入用户名"
                 type="text"
               />
             </div>
-
             <div class="mt-16 h-48 flex items-center justify-between rounded-999 bg-#F5F5F5 p-16">
               <input
-                v-model="loginForm.password"
+                v-model="localParamForm.password"
                 class="flex-grow-1"
                 placeholder="输入密码"
                 type="text"
               />
             </div>
           </div>
+          <div v-if="curLoginType === LoginTypeEnum.EMAIL" class="mb-10">
+            <div class="h-48 flex items-center rounded-999 bg-#F5F5F5 p-16">
+              <input
+                v-model="emailParamForm.username"
+                class="flex-grow-1"
+                placeholder="输入邮箱"
+                type="text"
+              />
+            </div>
+            <div class="mt-16 h-48 flex items-center justify-between rounded-999 bg-#F5F5F5 p-16">
+              <input
+                v-model="emailParamForm.password"
+                class="flex-grow-1"
+                placeholder="输入验证码"
+                type="text"
+              />
+              <div class="c-#ff2442">发送验证码</div>
+            </div>
+          </div>
           <div class="h-20 text-center text-14 c-#ff2442">{{ verifyFailMsg }}</div>
           <div
             class="my-16 h-48 flex cursor-pointer items-center justify-center rounded-999 bg-#ff2442 text-16 c-white font-600"
-            @click="login()"
+            @click="loginHandle()"
           >
             登录
           </div>
@@ -140,6 +200,20 @@ input[type='text'] {
   background: #f5f5f5;
   border: none;
   outline: none;
+}
+.login-type-item {
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 16px;
+    background: gray;
+    top: 50%;
+    right: -7px;
+    transform: translateY(-50%);
+  }
 }
 .shake-animation {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
